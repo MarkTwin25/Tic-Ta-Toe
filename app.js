@@ -2,6 +2,7 @@ const player = (mark) => {
     return {mark}
 }
 
+// Gameboard module
 const gameboard = (() => {
     const board = [
         "","","",
@@ -26,7 +27,7 @@ const gameboard = (() => {
     return {getBoard, putMark, resetBoard}
 })();
 
-
+// Game controller module
 const gameController = (() => {
     const player1 = player("X");
     const player2 = player("O");
@@ -121,9 +122,11 @@ const gameController = (() => {
         winnerCombination = undefined;
     }
 
-    return {playRound,resetGame, getCurrentTurn, getWinnerCombination}
+    return {playRound,resetGame, getCurrentTurn, getWinnerCombination, checkDraw}
 })();
 
+
+// Display controller module
 const displayController = (() => {
     const restartBtn = document.getElementById("restart");
     const gameboardDiv = document.getElementById("game-board");
@@ -163,10 +166,14 @@ const displayController = (() => {
                     div.classList.add("winner");
                 }
                 turn.textContent = `${gameController.getCurrentTurn()} wins!`;
-            }else if(gameboard.getBoard().every(e => e!== "")){
+            }else if(gameController.checkDraw()){
                 turn.textContent = "It's a draw!"
+            }else{
+                turn.textContent = `${gameController.getCurrentTurn()}'s Turn`;
             }
         }
+
+
     })
 
 
